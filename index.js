@@ -33,6 +33,7 @@ client.on('message', msg => {
 
         if (id != null) {
             list[id] = 0;
+            addedResponse(id, msg);
         }
     } else if (msgString.includes('guru list likes')) {
         Object.keys(list).forEach(function(key) {
@@ -49,6 +50,7 @@ client.on('message', msg => {
         if (id != null) {
             if (list.hasOwnProperty(id)) {
                 list[id] += 1
+                likeResponse(id, msg)
             }
         }
     } else if (msgString.includes('guru unlike')) {
@@ -99,6 +101,26 @@ function getMovie(id, msg, noPic) {
         } else {
             msg.channel.send(printableObj(jsonObj, list[id]), {files: [posterUrl(jsonObj)]});
         }
+    });
+}
+
+function addedResponse(id, msg) {
+    request(encodeURI('https://api.themoviedb.org/3/movie/' + id + '?api_key=4cb1eeab94f45affe2536f2c684a5c9e&append_to_response=credits'), function (error, response, body) {
+        console.error('error:', error);
+        console.log('statusCode:', response && response.statusCode);
+
+        const jsonObj = JSON.parse(body);
+        msg.reply("Added \"" + jsonObj.title + "\" to the list.")
+    });
+}
+
+function likeResponse(id, msg) {
+    request(encodeURI('https://api.themoviedb.org/3/movie/' + id + '?api_key=4cb1eeab94f45affe2536f2c684a5c9e&append_to_response=credits'), function (error, response, body) {
+        console.error('error:', error);
+        console.log('statusCode:', response && response.statusCode);
+
+        const jsonObj = JSON.parse(body);
+        msg.reply("Like for movie: \"" + jsonObj.title + "\"")
     });
 }
 
