@@ -4,15 +4,21 @@ const request = require('request');
 
 var list = {};
 
+function escapeMarkdown(text) {
+    var unescaped = text.replace(/\\(\*|_|`|~|\\)/g, '$1'); // unescape any "backslashed" character
+    var escaped = unescaped.replace(/(\*|_|`|~|\\)/g, '\\$1'); // escape *, _, `, ~, \
+    return escaped;
+  }
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.on('message', msg => {
     const msgString = msg.content;
-
+    console.log(msg);
     if (msgString.includes('guru who is your creator?')){
-        msg.reply("My lord and master @JC_Tec_");
+        msg.reply(escapeMarkdown("My lord and master <@!509591268087562260>"));
     } else if (msgString.includes('guru what is your purpose?')){
         msg.reply("I help you select movies...");
     } else if (msgString.includes('guru search')) {
