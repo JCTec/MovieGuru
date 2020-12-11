@@ -1,0 +1,15 @@
+{
+  "name": "movieguru",
+  "version": "1.0.0",
+  "description": "Movie Guru Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JC_Tec_",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "request": "^2.88.2"
+  }
+}
