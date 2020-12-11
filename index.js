@@ -11,7 +11,11 @@ client.on('ready', () => {
 client.on('message', msg => {
     const msgString = msg.content;
 
-    if (msgString.includes('guru search')) {
+    if (msgString.includes('guru who is your creator?')){
+        msg.reply("My lord and master @JC_Tec_");
+    } else if (msgString.includes('guru what is your purpose?')){
+        msg.reply("I help you select movies...");
+    } else if (msgString.includes('guru search')) {
         const searchQuery = msgString.replace("guru search ", "").trim();
 
         if (searchQuery != "") {
