@@ -229,7 +229,7 @@ function likeResponse(id, msg) {
 
 function printableObj(obj, likes) {
     str = obj.id
-    str += "\n"
+    str += ": "
     str += obj.title
 
     if (likes != null) {
