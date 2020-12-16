@@ -75,10 +75,10 @@ client.on('message', msg => {
             searchAndGetMovie(idstr, msg).then((movie) => {
 
                 if (list.hasOwnProperty(movie.id)) {
-                    list[id] += 1
+                    list[movie.id] += 1
                     msg.reply("Like for movie: \"" + movie.title + "\"")
                 } else {
-                    list[id] = 1
+                    list[movie.id] = 1
                     msg.reply("Added to the list and like for movie: \"" + movie.title + "\"")
                 }
 
@@ -104,7 +104,7 @@ client.on('message', msg => {
             })
         }
     } else if (msgString.includes('guru remove')) {
-        const idstr = msgString.replace("guru unlike ", "").trim();
+        const idstr = msgString.replace("guru remove ", "").trim();
         const id = parseInt(idstr) || -1;
 
         if (id != -1) {
