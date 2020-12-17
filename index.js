@@ -56,6 +56,15 @@ client.on('message', msg => {
         Object.keys(list).sort(compare).forEach(function(key) {
             getMovie(key, msg, true);
         });
+    } else if (msgString.includes('guru list first')) {
+        if (Object.keys(list).length > 0) {
+            getMovie(Object.keys(list).sort(compare)[0], msg);
+        }
+    } else if (msgString.includes('guru list random')) {
+        if (Object.keys(list).length > 0) {
+            const key = between(0, Object.keys(list).length);
+            getMovie(Object.keys(list).sort(compare)[key], msg);
+        }
     } else if (msgString.includes('guru list')) {
         Object.keys(list).sort(compare).forEach(function(key) {
             getMovie(key, msg);
@@ -194,11 +203,17 @@ function getMovieWith(id, msg) {
 }
 
 function getMovie(id, msg, noPic) {
-    request(encodeURI('https://api.themoviedb.org/3/movie/' + id + '?api_key=' + API_KEY_MOVIE + '&append_to_response=credits'), function (error, response, body) {
+    const uri = encodeURI('https://api.themoviedb.org/3/movie/' + id + '?api_key=' + API_KEY_MOVIE + '&append_to_response=credits');
+
+    request(uri, function (error, response, body) {
         console.error('error:', error);
         console.log('statusCode:', response && response.statusCode);
+        console.log(uri);
 
         const jsonObj = JSON.parse(body);
+
+        console.log(jsonObj);
+
         if (noPic) {
             msg.channel.send(printableObj(jsonObj, list[id]));
         } else {
@@ -246,3 +261,9 @@ function printableObj(obj, likes) {
 function posterUrl(obj) {
     return "https://image.tmdb.org/t/p/original" + obj.poster_path + "?api_key=" + API_KEY_MOVIE
 }
+
+function between(min, max) {  
+    return Math.floor(
+      Math.random() * (max - min) + min
+    )
+  }
